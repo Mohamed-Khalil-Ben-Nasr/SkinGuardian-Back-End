@@ -7,6 +7,7 @@ import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
+import com.skinguardian.backend.skinguardian_backend.entities.Diagnosis;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -75,6 +76,13 @@ public class UserService {
             return null;
 
         return maybeUser.get().getProfile();
+    }
+
+    public List<Diagnosis> findDiagnoses(UUID userId) {
+        Optional<User> maybeUser = userRepository.findById(userId);
+        if(maybeUser.isEmpty())
+            return null;
+        return maybeUser.get().getDiagnoses();
     }
     
 }

@@ -4,16 +4,12 @@
  */
 package com.skinguardian.backend.skinguardian_backend.entities;
 
+import java.util.List;
 import java.util.UUID;
+
+import jakarta.persistence.*;
 import org.hibernate.annotations.JdbcTypeCode;
 import org.hibernate.type.SqlTypes;
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.OneToOne;
-import jakarta.persistence.Table;
 
 @Entity
 @Table(name="users")
@@ -31,8 +27,8 @@ public class User {
     @OneToOne(mappedBy="user")
     private Profile profile;
     
-//    @OneToMany(mappedBy="user")
-//    private List<Diagnosis> diagnoses;
+    @OneToMany(mappedBy="user")
+    private List<Diagnosis> diagnoses;
     
     public User(){}
 
@@ -68,13 +64,13 @@ public class User {
         this.profile = profile;
     }
 
-//    public List<Diagnosis> getDiagnoses() {
-//        return diagnoses;
-//    }
-//
-//    public void setDiagnoses(List<Diagnosis> diagnoses) {
-//        this.diagnoses = diagnoses;
-//    }
+    public List<Diagnosis> getDiagnoses() {
+        return diagnoses;
+    }
+
+    public void setDiagnoses(List<Diagnosis> diagnoses) {
+        this.diagnoses = diagnoses;
+    }
     
     
 }

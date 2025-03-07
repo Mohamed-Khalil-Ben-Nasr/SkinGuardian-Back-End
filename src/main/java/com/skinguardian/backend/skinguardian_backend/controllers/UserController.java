@@ -4,6 +4,8 @@
  */
 package com.skinguardian.backend.skinguardian_backend.controllers;
 
+import com.skinguardian.backend.skinguardian_backend.entities.Diagnosis;
+import com.skinguardian.backend.skinguardian_backend.repositories.DiagnosisRepository;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -18,6 +20,10 @@ import org.springframework.security.core.Authentication;
 import com.skinguardian.backend.skinguardian_backend.services.DuplicateException;
 import com.skinguardian.backend.skinguardian_backend.dtos.ProfileDTO;
 import com.skinguardian.backend.skinguardian_backend.entities.Profile;
+import com.skinguardian.backend.skinguardian_backend.dtos.DiagnosisDTO;
+
+import java.util.ArrayList;
+import java.util.List;
 import java.util.UUID;
 import org.springframework.web.bind.annotation.GetMapping;
 import com.skinguardian.backend.skinguardian_backend.security.SkinguardianUserDetails;
@@ -94,6 +100,22 @@ public class UserController {
         }
         ProfileDTO response = new ProfileDTO(result);
         return ResponseEntity.ok().body(response);
+    }
+
+    @GetMapping("/diagnoses")
+    public ResponseEntity<List<DiagnosisDTO>> getUserDiagnoses(Authentication authentication){
+        SkinguardianUserDetails details = (SkinguardianUserDetails) authentication.getPrincipal();
+        UUID id = UUID.fromString(details.getUsername());
+        List<Diagnosis> diagnosis = us.findDiagnoses(id);
+        if (diagnosis == null){
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+        }
+        List<DiagnosisDTO> result = new ArrayList<DiagnosisDTO>();
+        for (Diagnosis d : diagnosis){
+            result.add(new DiagnosisDTO(d));
+        }
+
+        return ResponseEntity.ok().body(result);
     }
 
 
