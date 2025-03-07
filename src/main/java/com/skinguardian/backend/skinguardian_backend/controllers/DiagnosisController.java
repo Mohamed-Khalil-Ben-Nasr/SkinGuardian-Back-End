@@ -26,8 +26,9 @@ public class DiagnosisController {
     private UserService us;
     private DiagnosisService ds;
 
-    public DiagnosisController(DiagnosisService ds){
+    public DiagnosisController(DiagnosisService ds, UserService us){
         this.ds = ds;
+        this.us = us;
     }
 
 
