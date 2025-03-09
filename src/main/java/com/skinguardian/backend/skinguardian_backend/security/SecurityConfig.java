@@ -15,6 +15,7 @@ import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
+
 @Configuration
 @EnableWebSecurity
 @EnableMethodSecurity
@@ -29,10 +30,13 @@ public class SecurityConfig {
         .sessionManagement(management -> management
                 .sessionCreationPolicy(SessionCreationPolicy.STATELESS))
         .authorizeHttpRequests(
-                authorize -> authorize.requestMatchers(HttpMethod.POST, "/users", "/users/login").permitAll()
-                .anyRequest().authenticated()
+                authorize -> authorize
+                        .requestMatchers(HttpMethod.OPTIONS, "/**").permitAll() // Allow preflight requests to avoid cors policy blocking my requests to controller
+                        .requestMatchers(HttpMethod.POST, "/users", "/users/login").permitAll()
+                        .anyRequest().authenticated()
                 )
         .addFilterBefore( jwtAuthFilter, UsernamePasswordAuthenticationFilter.class); 
         return http.build();
     }
+
 }
