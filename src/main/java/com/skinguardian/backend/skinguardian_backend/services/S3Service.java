@@ -43,6 +43,7 @@ public class S3Service {
                     PutObjectRequest.builder()
                         .bucket(bucketName)
                          .key(fileName)
+                        .acl(ObjectCannedACL.PUBLIC_READ)  // Allow public read access
                         .build(),
                     // request body contains the image in bytes
                     RequestBody.fromBytes(file.getBytes())
