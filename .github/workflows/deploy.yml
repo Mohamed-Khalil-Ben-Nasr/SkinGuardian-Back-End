@@ -44,7 +44,7 @@ jobs:
           username: ${{ secrets.EC2_USER }}
           key: ${{ secrets.EC2_SSH_KEY }}
           script: |
-            docker pull couscoustn/skinguardian-cicd:latest
-            docker stop skinguardian-backend || true
-            docker rm skinguardian-backend || true
-            docker run -d -p 8085:8085 --name skinguardian-backend couscoustn/skinguardian-cicd:latest
+            sudo docker pull couscoustn/skinguardian-cicd:latest
+            sudo docker stop skinguardian-backend || true
+            sudo docker rm skinguardian-backend || true
+            sudo docker run -d -p 8085:8085 --name skinguardian-backend couscoustn/skinguardian-cicd:latest
