@@ -32,6 +32,7 @@ public class SecurityConfig {
         .authorizeHttpRequests(
                 authorize -> authorize
                         .requestMatchers(HttpMethod.OPTIONS, "/**").permitAll() // Allow preflight requests to avoid cors policy blocking my requests to controller
+                        .requestMatchers("/health").permitAll() // no authentication required for the health check, this made me suffer
                         .requestMatchers(HttpMethod.POST, "/users", "/users/login").permitAll()
                         .anyRequest().authenticated()
                 )
