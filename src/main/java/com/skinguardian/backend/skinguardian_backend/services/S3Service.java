@@ -10,6 +10,8 @@ import software.amazon.awssdk.regions.Region;
 import software.amazon.awssdk.services.s3.S3Client;
 import software.amazon.awssdk.services.s3.model.*;
 
+import software.amazon.awssdk.auth.credentials.InstanceProfileCredentialsProvider;
+
 import java.io.IOException;
 import java.util.UUID;
 
@@ -25,7 +27,8 @@ public class S3Service {
     public S3Service(){
         this.s3Client = S3Client.builder()
                 .region(region)
-                .credentialsProvider(ProfileCredentialsProvider.create())
+                // will get credentials from iam role that is attached to the ec2 instance
+                .credentialsProvider(InstanceProfileCredentialsProvider.create())
                 .build();
     }
 
